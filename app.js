@@ -1,4 +1,4 @@
-const CONTRACT_ADDRESS = "0xd9145CCE52D386f254917e481eB44e9943F39138";
+const CONTRACT_ADDRESS = "0x358AA13c52544ECCEF6B0ADD0f801012ADAD5eE3";
 const SEPOLIA_CHAIN_ID = 11155111;
 
 // ABI = list of the contract functions/events the website may use.
