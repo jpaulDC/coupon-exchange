@@ -21,39 +21,57 @@ body {
     min-height: 100vh;
 }
 
-/* Sidebar Styling */
-.sidebar {
-    width: 260px;
-    background-color: #111827; /* Darker Midnight Sidebar */
-    border-right: 1px solid #1f2937;
+/* Sidebar Navigation Icon and Layout Polish */
+.nav-menu {
     display: flex;
     flex-direction: column;
-    padding: 20px;
-    position: fixed;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    z-index: 100;
+    gap: 6px;
+    flex-grow: 1;
+    margin-top: 10px;
 }
 
-.brand {
+.nav-btn {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* Para mapunta sa dulo ang arrow kung lalagyan */
+    background: transparent;
+    border: none;
+    color: #9ca3af;
+    padding: 12px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.95rem;
+    font-weight: 500;
+    text-align: left;
+    transition: all 0.2s ease;
+}
+
+/* Container para sa icon at text sa kaliwa */
+.nav-btn .nav-content-left {
     display: flex;
     align-items: center;
     gap: 12px;
-    margin-bottom: 30px;
-    padding-left: 10px;
 }
 
-.logo-icon {
-    font-size: 24px;
+.nav-btn:hover {
+    background-color: rgba(59, 130, 246, 0.1);
+    color: #60a5fa;
 }
 
-.brand h2 {
+.nav-btn.active {
+    background-color: #2563eb; /* Electric Blue Active */
     color: #ffffff;
-    font-size: 1.25rem;
+}
+
+/* Istilo para sa mga sub-sections o dividers kung gusto mo gayahin ang 'MAIN PAGES' label */
+.sidebar-section-title {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    color: #6b7280;
+    letter-spacing: 0.05em;
+    margin: 15px 0 5px 16px;
     font-weight: 600;
 }
-
 /* Navigation Menu */
 .nav-menu {
     display: flex;
