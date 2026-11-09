@@ -21,11 +21,11 @@ body {
     min-height: 100vh;
 }
 
-/* Sidebar Navigation Icon and Layout Polish */
+/* Sidebar Navigation */
 .nav-menu {
     display: flex;
     flex-direction: column;
-    gap: 6px;
+    gap: 8px;
     flex-grow: 1;
     margin-top: 10px;
 }
@@ -33,57 +33,7 @@ body {
 .nav-btn {
     display: flex;
     align-items: center;
-    justify-content: space-between; /* Para mapunta sa dulo ang arrow kung lalagyan */
-    background: transparent;
-    border: none;
-    color: #9ca3af;
-    padding: 12px 16px;
-    border-radius: 8px;
-    cursor: pointer;
-    font-size: 0.95rem;
-    font-weight: 500;
-    text-align: left;
-    transition: all 0.2s ease;
-}
-
-/* Container para sa icon at text sa kaliwa */
-.nav-btn .nav-content-left {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-}
-
-.nav-btn:hover {
-    background-color: rgba(59, 130, 246, 0.1);
-    color: #60a5fa;
-}
-
-.nav-btn.active {
-    background-color: #2563eb; /* Electric Blue Active */
-    color: #ffffff;
-}
-
-/* Istilo para sa mga sub-sections o dividers kung gusto mo gayahin ang 'MAIN PAGES' label */
-.sidebar-section-title {
-    font-size: 0.7rem;
-    text-transform: uppercase;
-    color: #6b7280;
-    letter-spacing: 0.05em;
-    margin: 15px 0 5px 16px;
-    font-weight: 600;
-}
-/* Navigation Menu */
-.nav-menu {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    flex-grow: 1;
-}
-
-.nav-btn {
-    display: flex;
-    align-items: center;
-    gap: 12px;
+    justify-content: space-between;
     background: transparent;
     border: none;
     color: #9ca3af;
@@ -224,14 +174,19 @@ body {
     box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.2);
 }
 
-/* Buttons */
-.btn {
+/* Global Buttons & Card Action Buttons Styling */
+.btn, 
+.card button, 
+.form-card button, 
+.card [data-action] {
     padding: 10px 18px;
     border-radius: 8px;
     font-weight: 600;
     cursor: pointer;
     border: none;
-    transition: background-color 0.2s;
+    transition: background-color 0.2s ease;
+    background-color: #2563eb;
+    color: #ffffff;
 }
 
 .btn-primary {
@@ -240,7 +195,10 @@ body {
     width: 100%;
 }
 
-.btn-primary:hover {
+.btn-primary:hover, 
+.card button:hover, 
+.form-card button:hover, 
+.card [data-action]:hover {
     background-color: #1d4ed8;
 }
 
@@ -251,6 +209,19 @@ body {
 
 .btn-success:hover {
     background-color: #059669;
+}
+
+/* Danger / Cancel Action Buttons inside cards */
+.card button.danger, 
+.card [data-action="cancel"] {
+    background-color: rgba(239, 68, 68, 0.2) !important;
+    color: #f87171 !important;
+    border: 1px solid rgba(239, 68, 68, 0.4) !important;
+}
+
+.card button.danger:hover, 
+.card [data-action="cancel"]:hover {
+    background-color: rgba(239, 68, 68, 0.3) !important;
 }
 
 /* Grid Containers for Dynamic Cards */
@@ -293,7 +264,7 @@ body {
 
 /* Badge tags */
 .badge {
-    display: inline-block.inline-block;
+    display: inline-block;
     padding: 4px 10px;
     border-radius: 20px;
     font-size: 0.75rem;
