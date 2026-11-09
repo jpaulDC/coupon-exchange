@@ -1,82 +1,122 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Digital Coupon Exchange</title>
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digital Coupon Exchange</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/web3@1.8.0/dist/web3.min.js"></script>
 </head>
 <body>
+    <div class="app-container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="brand">
+                <span class="logo-icon">🎟️</span>
+                <h2>CouponEx</h2>
+            </div>
+            
+            <nav class="nav-menu">
+                <button class="nav-btn active" onclick="switchTab('dashboard')">
+                    <span class="icon">📊</span> Dashboard
+                </button>
+                <button class="nav-btn" onclick="switchTab('coupons')">
+                    <span class="icon">🏷️</span> Coupon Marketplace
+                </button>
+                <button class="nav-btn" onclick="switchTab('my-coupons')">
+                    <span class="icon">💼</span> My Coupons
+                </button>
+                <button class="nav-btn" onclick="switchTab('exchange')">
+                    <span class="icon">🔄</span> Exchange Marketplace
+                </button>
+            </nav>
 
-  <header>
-    <h1>🎟️ Coupon Exchange</h1>
-    <div class="wallet">
-      <span id="network" class="pill">Not connected</span>
-      <span id="account" class="pill">No wallet</span>
-      <button id="connectBtn">Connect Wallet</button>
+            <div class="wallet-status">
+                <p class="status-label">Wallet Status</p>
+                <p id="accountAddress" class="wallet-address">Not Connected</p>
+                <button id="connectBtn" class="btn btn-primary" onclick="connectWallet()">Connect Wallet</button>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <!-- Dashboard View -->
+            <section id="dashboard" class="tab-content active">
+                <header class="content-header">
+                    <h1>Dashboard</h1>
+                    <p>Overview of your digital coupons and exchange activity</p>
+                </header>
+
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <h3>Total Coupons</h3>
+                        <p id="statTotalCoupons" class="stat-value">0</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Available Coupons</h3>
+                        <p id="statAvailableCoupons" class="stat-value">0</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>My Claimed Coupons</h3>
+                        <p id="statMyCoupons" class="stat-value">0</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Coupon Marketplace View -->
+            <section id="coupons" class="tab-content">
+                <header class="content-header">
+                    <h1>Coupon Marketplace</h1>
+                    <p>Browse and claim available digital coupons</p>
+                </header>
+
+                <div class="card form-card">
+                    <h3>Create New Coupon</h3>
+                    <form id="createCouponForm" onsubmit="handleCreateCoupon(event)">
+                        <div class="form-group">
+                            <label for="couponCode">Coupon Code</label>
+                            <input type="text" id="couponCode" placeholder="e.g. SUMMER2026" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="discountAmount">Discount Value</label>
+                            <input type="number" id="discountAmount" placeholder="e.g. 20" required>
+                        </div>
+                        <button type="submit" class="btn btn-success">Add Coupon</button>
+                    </form>
+                </div>
+
+                <div class="coupon-list-container">
+                    <h3>Available Coupons</h3>
+                    <div id="couponList" class="grid-container">
+                        <!-- Dynamic coupon cards via app.js -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- My Coupons View -->
+            <section id="my-coupons" class="tab-content">
+                <header class="content-header">
+                    <h1>My Coupons</h1>
+                    <p>Manage coupons you currently hold</p>
+                </header>
+                <div id="myCouponList" class="grid-container">
+                    <!-- Dynamic personal coupons via app.js -->
+                </div>
+            </section>
+
+            <!-- Exchange Marketplace View -->
+            <section id="exchange" class="tab-content">
+                <header class="content-header">
+                    <h1>Exchange Marketplace</h1>
+                    <p>Trade coupons with other users</p>
+                </header>
+                <div id="exchangeList" class="grid-container">
+                    <!-- Dynamic exchange offers via app.js -->
+                </div>
+            </section>
+        </main>
     </div>
-  </header>
 
-  <nav>
-    <button class="tab active" data-view="dashboard">Dashboard</button>
-    <button class="tab" data-view="market">Coupon Marketplace</button>
-    <button class="tab" data-view="mine">My Coupons</button>
-    <button class="tab" data-view="exchange">Exchange Marketplace</button>
-    <button class="tab hidden" id="adminTab" data-view="admin">Admin Panel</button>
-  </nav>
-
-  <div id="status" class="status hidden"></div>
-
-  <main>
-    <section id="view-dashboard" class="view">
-      <h2>Dashboard</h2>
-      <div class="stats">
-        <div class="stat"><span id="statTotal">0</span><p>Total coupons</p></div>
-        <div class="stat"><span id="statAvailable">0</span><p>Available coupons</p></div>
-        <div class="stat"><span id="statMine">0</span><p>My claimed coupons</p></div>
-        <div class="stat"><span id="statOffers">0</span><p>Pending exchange offers</p></div>
-      </div>
-    </section>
-
-    <section id="view-market" class="view hidden">
-      <h2>Coupon Marketplace</h2>
-      <div id="marketList" class="grid"></div>
-    </section>
-
-    <section id="view-mine" class="view hidden">
-      <h2>My Coupons</h2>
-      <div id="myList" class="grid"></div>
-    </section>
-
-    <section id="view-exchange" class="view hidden">
-      <h2>Exchange Marketplace</h2>
-      <div id="offerList" class="grid"></div>
-    </section>
-
-    <section id="view-admin" class="view hidden">
-      <h2>Admin Panel</h2>
-      <div class="form">
-        <input id="cName" type="text" placeholder="Coupon name">
-        <input id="cDiscount" type="number" min="1" max="100" placeholder="Discount %">
-        <input id="cExpiry" type="datetime-local">
-        <button id="addCouponBtn">Add Coupon</button>
-      </div>
-      <h3>All created coupons</h3>
-      <div id="adminList" class="grid"></div>
-    </section>
-  </main>
-
-  <!-- Pop-up used to choose which coupon you want in exchange -->
-  <dialog id="exchangeDialog">
-    <h3>Offer coupon <span id="dlgOffered"></span> for:</h3>
-    <select id="dlgSelect"></select>
-    <div class="dlg-buttons">
-      <button id="dlgConfirm">Create Offer</button>
-      <button id="dlgCancel" class="secondary">Close</button>
-    </div>
-  </dialog>
-
-  <script src="https://cdn.jsdelivr.net/npm/ethers@6.13.4/dist/ethers.umd.min.js"></script>
-  <script src="app.js"></script>
+    <script src="app.js"></script>
 </body>
 </html>
